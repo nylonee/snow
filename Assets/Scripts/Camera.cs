@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 namespace COMP30019.Project2
 {
     public class Camera : MonoBehaviour
