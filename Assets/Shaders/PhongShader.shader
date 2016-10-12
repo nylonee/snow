@@ -1,4 +1,7 @@
-﻿// Original Cg/HLSL code stub copyright (c) 2010-2012 SharpDX - Alexandre Mutel
+﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
+
+// Original Cg/HLSL code stub copyright (c) 2010-2012 SharpDX - Alexandre Mutel
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -66,8 +69,8 @@ Shader "Unlit/PhongShader"
 				// Note that we have to multiply the normal by the transposed inverse of the world 
 				// transformation matrix (for cases where we have non-uniform scaling; we also don't
 				// care about the "fourth" dimension, because translations don't affect the normal) 
-				float4 worldVertex = mul(_Object2World, v.vertex);
-				float3 worldNormal = normalize(mul(transpose((float3x3)_World2Object), v.normal.xyz));
+				float4 worldVertex = mul(unity_ObjectToWorld, v.vertex);
+				float3 worldNormal = normalize(mul(transpose((float3x3)unity_WorldToObject), v.normal.xyz));
 
 				// Transform vertex in world coordinates to camera coordinates, and pass colour
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
