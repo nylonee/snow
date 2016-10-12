@@ -23,8 +23,12 @@ namespace COMP30019.Project2
         [Tooltip("Value between 0.0f and 1.0f")]
         public float slopeBottomHeight = 0.3f;
 
+        [Tooltip("The material for the terrain")]
+        public Material terrainMaterial;
+
         private GameObject terrainObj;
         private TerrainData terrainData;
+        private Terrain terrain;
         private float[,] heightmap;
 
         public void Generate()
@@ -37,6 +41,11 @@ namespace COMP30019.Project2
             terrainData.SetHeights(0, 0, heightmap);
 
             terrainObj = Terrain.CreateTerrainGameObject(terrainData);
+            terrainObj.tag = "Terrain";
+
+            terrain = terrainObj.GetComponent<Terrain>();
+            
+            
         }
 
         public float[,] GetHeightmap()
