@@ -66,8 +66,8 @@ Shader "Unlit/PhongShader"
 				// Note that we have to multiply the normal by the transposed inverse of the world 
 				// transformation matrix (for cases where we have non-uniform scaling; we also don't
 				// care about the "fourth" dimension, because translations don't affect the normal) 
-				float4 worldVertex = mul(_Object2World, v.vertex);
-				float3 worldNormal = normalize(mul(transpose((float3x3)_World2Object), v.normal.xyz));
+				float4 worldVertex = mul(Object2World, v.vertex);
+				float3 worldNormal = normalize(mul(transpose((float3x3)World2Object), v.normal.xyz));
 
 				// Transform vertex in world coordinates to camera coordinates, and pass colour
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
@@ -121,4 +121,7 @@ Shader "Unlit/PhongShader"
 			ENDCG
 		}
 	}
+	// Required to generate depth texture for image postprocessing
+	// See: https://docs.unity3d.com/Manual/SL-CameraDepthTexture.html
+	FallBack "Diffuse"
 }
