@@ -112,6 +112,8 @@ namespace COMP30019.Project2
             terrainObj.AddComponent(typeof(TerrainSplat));
 
             MeshRenderer renderer = terrainObj.AddComponent<MeshRenderer>();
+
+            renderer.material.shader = shader;
         }
     }
 }
