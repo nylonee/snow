@@ -26,6 +26,12 @@ namespace COMP30019.Project2
         [Tooltip("The material for the terrain")]
         public Material terrainMaterial;
 
+        [Tooltip("The texture for the terrain")]
+        public string[] textures;
+
+        [Tooltip("The shader used for rendering the splatmap")]
+        public Shader shader;
+
         private GameObject terrainObj;
         private TerrainData terrainData;
         private Terrain terrain;
@@ -43,12 +49,16 @@ namespace COMP30019.Project2
             terrainObj = Terrain.CreateTerrainGameObject(terrainData);
             terrainObj.tag = "Terrain";
 
+            // Generate the splat, adding textures to the terrain
+            GenerateTerrainSplat();
+
             terrain = terrainObj.GetComponent<Terrain>();
             terrain.materialType = Terrain.MaterialType.Custom;
             terrain.materialTemplate = terrainMaterial;
 
             terrainMaterial.SetColor("_PointLightColor", Color.white);
             terrainMaterial.SetVector("_PointLightPosition", new Vector4(size.x*2, size.y*2, size.z*2));
+
         }
 
         public float[,] GetHeightmap()
@@ -82,6 +92,26 @@ namespace COMP30019.Project2
         private void SetHeightmapValue(int x, int y, float value)
         {
             heightmap[x, y] = Mathf.Clamp(value, 0.0f, 1.0f);
+        }
+
+        void GenerateTerrainSplat()
+        {
+            SplatPrototype[] terrainTexture = new SplatPrototype[textures.Length];
+
+            for(int i = 0; i < terrainTexture.Length; i++)
+            {
+                terrainTexture[i] = new SplatPrototype();
+                byte[] fileData = System.IO.File.ReadAllBytes(textures[i]);
+                Texture2D tex = new Texture2D(2, 2);
+                tex.LoadImage(fileData);
+                terrainTexture[i].texture = tex;
+            }
+
+            terrainData.splatPrototypes = terrainTexture;
+            
+            terrainObj.AddComponent(typeof(TerrainSplat));
+
+            MeshRenderer renderer = terrainObj.AddComponent<MeshRenderer>();
         }
     }
 }
