@@ -55,10 +55,6 @@ namespace COMP30019.Project2
             terrain = terrainObj.GetComponent<Terrain>();
             terrain.materialType = Terrain.MaterialType.Custom;
             terrain.materialTemplate = terrainMaterial;
-
-            terrainMaterial.SetColor("_PointLightColor", Color.white);
-            terrainMaterial.SetVector("_PointLightPosition", new Vector4(size.x*2, size.y*2, size.z*2));
-
         }
 
         public float[,] GetHeightmap()

@@ -5,12 +5,12 @@
 		_MainTex("Base (RGB)", 2D) = "white" {}
 		_FogStart("Fog Start", Float) = 0.5
 	}
+
 	SubShader
 	{
-		Tags
-		{
-			"RenderType" = "Opaque"
-		}
+		Cull Off
+		ZWrite Off
+		ZTest Always
 
 		Pass
 		{
