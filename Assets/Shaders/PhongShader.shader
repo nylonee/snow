@@ -25,7 +25,7 @@
 // Adapted further by Chris Ewin, 23 Sep 2013
 // Adapted further (again) by Alex Zable (port to Unity), 19 Aug 2016
 
-Shader "Unlit/PhongShader"
+Shader "Custom/TerrainShader"
 {
 	Properties
 	{
@@ -44,6 +44,8 @@ Shader "Unlit/PhongShader"
 
 			uniform float3 _PointLightColor;
 			uniform float3 _PointLightPosition;
+
+			uniform sampler2D _MainTex;
 
 			struct vertIn
 			{
@@ -119,7 +121,7 @@ Shader "Unlit/PhongShader"
 				returnColor.rgb = amb.rgb + dif.rgb + spe.rgb;
 				returnColor.a = v.color.a;
 
-				return returnColor;
+				return tex2D(_MainTex, v.worldVertex);;
 			}
 			ENDCG
 		}

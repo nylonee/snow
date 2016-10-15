@@ -8,9 +8,12 @@
 
 	SubShader
 	{
+		Tags { "RenderType" = "Opaque" }
+
 		Cull Off
 		ZWrite Off
 		ZTest Always
+		Lighting Off
 
 		Pass
 		{
@@ -21,7 +24,7 @@
 			#include "UnityCG.cginc"
 
 			uniform sampler2D _MainTex;
-			uniform sampler2D _CameraDepthTexture;
+			uniform sampler2D _CameraDepthNormalsTexture;
 			uniform float _FogStart;
 
 			struct v2f
@@ -50,8 +53,11 @@
 				screenPosDepth.y = 1 - screenPosDepth.y;
 				#endif
 
+				float depthValue;
+				float3 normalValues;
+
 				// Get depth value from 0-1
-				float depthValue = Linear01Depth(tex2Dproj(_CameraDepthTexture, UNITY_PROJ_COORD(screenPosDepth)).r);
+				DecodeDepthNormal(tex2D(_CameraDepthNormalsTexture, screenPosDepth.xy), depthValue, normalValues);
 
 				// If past starting point for fog, linearly interpolate to grey (ending at max camera depth)
 				if(depthValue > _FogStart)
