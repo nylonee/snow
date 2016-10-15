@@ -8,29 +8,52 @@ namespace COMP30019.Project2
 {
     public class InputManager : MonoBehaviour
     {
-        public Rigidbody player;
-        public float strength = 100;
-        
+        public float force = 1000.0f;
+        public float rotationSpeed = 75.0f;
+        public float turnLift = 250.0f;
+
+        private bool isTouchingGround = false;
+        private Rigidbody rb;
+
         void Start()
         {
+            rb = GetComponent<Rigidbody>();
         }
 
-        Vector3 getTilt()
+        float getTilt()
         {
-            Vector3 direction = Vector3.zero;
-            if (Input.GetKey(KeyCode.W)) direction += Vector3.forward;
-            if (Input.GetKey(KeyCode.S)) direction += Vector3.back;
-            if (Input.GetKey(KeyCode.D)) direction += Vector3.right;
-            if (Input.GetKey(KeyCode.A)) direction += Vector3.left;
+            float direction = 0.0f;
 
-            if (Input.GetKey(KeyCode.Space)) direction += 10 * Vector3.up; // jump
+            if (Input.GetKey(KeyCode.D)) direction += 1.0f;
+            if (Input.GetKey(KeyCode.A)) direction -= 1.0f;
 
             return direction;
         }
 
-        void Update()
+        void FixedUpdate()
         {
-            player.AddForce(strength * getTilt());
+            if (isTouchingGround)
+            {
+                rb.MoveRotation(transform.rotation * Quaternion.Euler(0.0f, getTilt() * rotationSpeed * Time.deltaTime, 0.0f));
+                rb.AddRelativeTorque(getTilt() * Vector3.right * turnLift * Time.deltaTime);
+                rb.AddForce(rb.rotation * Vector3.left * force * Time.deltaTime);
+            }
+            else
+            {
+                rb.MoveRotation(transform.rotation * Quaternion.Euler(0.0f, getTilt() * rotationSpeed * 2 * Time.deltaTime, 0.0f));
+            }
+        }
+
+        void OnCollisionEnter(Collision collision)
+        {
+            if (collision.collider.gameObject.tag == "Terrain")
+                isTouchingGround = true;
+        }
+
+        void OnCollisionExit(Collision collision)
+        {
+            if (collision.collider.gameObject.tag == "Terrain")
+                isTouchingGround = false;
         }
     }
 }
