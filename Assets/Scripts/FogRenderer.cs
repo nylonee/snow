@@ -10,7 +10,7 @@ namespace COMP30019.Project2
 
         void Start()
         {
-            GetComponent<Camera>().depthTextureMode = DepthTextureMode.Depth;
+            gameObject.GetComponentInParent<Camera>().depthTextureMode = DepthTextureMode.Depth;   
         }
 
         void OnRenderImage(RenderTexture src, RenderTexture dest)
