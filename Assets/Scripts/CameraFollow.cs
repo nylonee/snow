@@ -22,7 +22,7 @@ namespace COMP30019.Project2
         {
             if (terrain == null || terrainData == null)
             {
-                terrain = (Terrain)(GameObject.FindGameObjectWithTag("Terrain").GetComponent<Terrain>());
+                terrain = Terrain.activeTerrain;
                 terrainData = terrain.terrainData;
             }
             
