@@ -1,4 +1,4 @@
-﻿Shader "Postprocessing/Fog"
+﻿Shader "Custom/Fog"
 {
 	Properties
 	{
@@ -13,7 +13,6 @@
 		Cull Off
 		ZWrite Off
 		ZTest Always
-		Lighting Off
 
 		Pass
 		{

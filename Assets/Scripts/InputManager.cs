@@ -8,9 +8,10 @@ namespace COMP30019.Project2
 {
     public class InputManager : MonoBehaviour
     {
-        public float force = 1000.0f;
+        public float force = 1250.0f;
         public float rotationSpeed = 75.0f;
-        public float turnLift = 250.0f;
+        public float turnLift = 750.0f;
+        public float uprightAssist = 1.0f;
 
         private bool isTouchingGround = false;
         private Rigidbody rb;
@@ -32,15 +33,21 @@ namespace COMP30019.Project2
 
         void FixedUpdate()
         {
+            // Normal movement if touching ground
             if (isTouchingGround)
             {
-                rb.MoveRotation(transform.rotation * Quaternion.Euler(0.0f, getTilt() * rotationSpeed * Time.deltaTime, 0.0f));
+                rb.MoveRotation(rb.rotation * Quaternion.Euler(0.0f, getTilt() * rotationSpeed * Time.deltaTime, 0.0f));
                 rb.AddRelativeTorque(getTilt() * Vector3.right * turnLift * Time.deltaTime);
                 rb.AddForce(rb.rotation * Vector3.left * force * Time.deltaTime);
+
+                // Try to keep upright
+                rb.MoveRotation(Quaternion.Euler(Mathf.MoveTowardsAngle(fixAngle(rb.rotation.eulerAngles.x), 0.0f, uprightAssist * Time.deltaTime), rb.rotation.eulerAngles.y, rb.rotation.eulerAngles.z));
             }
+
+            // If not touching ground, only rotate
             else
             {
-                rb.MoveRotation(transform.rotation * Quaternion.Euler(0.0f, getTilt() * rotationSpeed * 2 * Time.deltaTime, 0.0f));
+                rb.MoveRotation(rb.rotation * Quaternion.Euler(0.0f, getTilt() * rotationSpeed * 2 * Time.deltaTime, 0.0f));
             }
         }
 
@@ -54,6 +61,17 @@ namespace COMP30019.Project2
         {
             if (collision.collider.gameObject.tag == "Terrain")
                 isTouchingGround = false;
+        }
+
+        private float fixAngle(float angle)
+        {
+            if (angle < 0.0f)
+                angle += 360.0f;
+            else
+                while (angle > 360.0f)
+                    angle -= 360.0f;
+
+            return angle;
         }
     }
 }
