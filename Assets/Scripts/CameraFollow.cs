@@ -6,10 +6,10 @@ namespace COMP30019.Project2
     public class CameraFollow : MonoBehaviour
     {
         [Tooltip("The height of the camera above the snowboarder")]
-        public float height = 10;
+        public float height = 20.0f;
 
         [Tooltip("The distance of the camera behind the snowboarder")]
-        public float distance = 10;
+        public float distance = 10.0f;
 
         [Tooltip("In degrees")]
         public float maxCameraPan = 90.0f;
@@ -38,16 +38,15 @@ namespace COMP30019.Project2
 
             CameraPan();
 
-            float y = (float)player.transform.position.y / (float)terrainData.alphamapHeight;
-            float x = (float)player.transform.position.x / (float)terrainData.alphamapWidth;
+            float x = player.transform.position.x / terrainData.heightmapWidth;
+            float z = player.transform.position.z / terrainData.heightmapWidth;
 
-            Vector3 normal = terrainData.GetInterpolatedNormal(y, x);
+            Vector3 normal = terrainData.GetInterpolatedNormal(x, z);
+            normal.x = -normal.x;
             Vector3 perp = Vector3.Cross(normal, orientation);
             
             cameraTransform.position = player.transform.position + normal*height + perp*distance;
 
-            // Ensure that the position of the camera is always above a certain height
-            cameraTransform.position += new Vector3{ x = 0f, y = 7f, z = 0f};
             cameraTransform.LookAt(transform);
             cameraTransform.rotation *= Quaternion.Euler(-10.0f, 0.0f, 0.0f);
         }
