@@ -3,10 +3,10 @@ using System.Collections;
 
 namespace COMP30019.Project2
 {
-    public class FogRenderer : MonoBehaviour
+    public class ImageEffectRenderer : MonoBehaviour
     {
-        [Tooltip("Material with the fog shader")]
-        public Material fogMaterial;
+        [Tooltip("Material with the image effect shader")]
+        public Material imageEffectMaterial;
 
         void Start()
         {
@@ -15,7 +15,7 @@ namespace COMP30019.Project2
 
         void OnRenderImage(RenderTexture src, RenderTexture dest)
         {
-            Graphics.Blit(src, dest, fogMaterial);
+            Graphics.Blit(src, dest, imageEffectMaterial);
         }
     }
 }

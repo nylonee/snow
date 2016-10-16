@@ -48,15 +48,12 @@
 
 				// May have to invert y for depth texture
 				float4 screenPosDepth = i.screenPos;
-				#if UNITY_UV_STARTS_AT_TOP
-				screenPosDepth.y = 1 - screenPosDepth.y;
-				#endif
-
-				float depthValue;
-				float3 normalValues;
+				//#if UNITY_UV_STARTS_AT_TOP
+				//screenPosDepth.y = 1 - screenPosDepth.y;
+				//#endif
 
 				// Get depth value from 0-1
-				DecodeDepthNormal(tex2D(_CameraDepthNormalsTexture, screenPosDepth.xy), depthValue, normalValues);
+				float depthValue = DecodeFloatRG(tex2D(_CameraDepthNormalsTexture, screenPosDepth.xy).zw);
 
 				// If past starting point for fog, linearly interpolate to grey (ending at max camera depth)
 				if(depthValue > _FogStart)
