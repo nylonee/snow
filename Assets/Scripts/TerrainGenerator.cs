@@ -29,9 +29,6 @@ namespace COMP30019.Project2
         [Tooltip("The texture for the terrain")]
         public string[] textures;
 
-        [Tooltip("The shader used for rendering the splatmap")]
-        public Shader shader;
-
         [Tooltip("The number of trees and rocks to add to the terrain")]
         public int numTrees;
 
@@ -117,8 +114,6 @@ namespace COMP30019.Project2
             terrainObj.AddComponent(typeof(TerrainSplat));
 
             MeshRenderer renderer = terrainObj.AddComponent<MeshRenderer>();
-
-            renderer.material.shader = shader;
         }
 
         void AddTreesAndRocks()
