@@ -35,6 +35,9 @@ namespace COMP30019.Project2
         [Tooltip("The number of trees and rocks to add to the terrain")]
         public int numTrees;
 
+        [Tooltip("Player prefab")]
+        public GameObject playerPrefab;
+
         private GameObject terrainObj;
         private Terrain terrain;
         private TerrainData terrainData;
@@ -53,6 +56,8 @@ namespace COMP30019.Project2
             GenerateTerrainSplat();
 
             AddTreesAndRocks();
+
+            AddPlayer();
         }
 
         public float[,] GetHeightmap()
@@ -136,6 +141,15 @@ namespace COMP30019.Project2
                 tree.widthScale = 1.0f;
                 terrain.AddTreeInstance(tree);
             }
+        }
+
+        void AddPlayer()
+        {
+            Vector3 startPos = new Vector3(size.x / 2.0f, 0.0f, 50.0f);
+
+            startPos.y = heightmap[(int)startPos.z, (int)startPos.x] * terrainData.heightmapHeight + 5.0f;
+
+            Instantiate(playerPrefab, startPos, playerPrefab.transform.rotation);
         }
     }
 }
