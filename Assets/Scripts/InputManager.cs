@@ -14,19 +14,34 @@ namespace COMP30019.Project2
         public float uprightAssist = 1.0f;
 
         private bool isTouchingGround = false;
+        private Gyroscope gyro;
         private Rigidbody rb;
 
         void Start()
         {
             rb = GetComponent<Rigidbody>();
+            gyro = Input.gyro;
+
+            if (SystemInfo.supportsGyroscope)
+                gyro.enabled = true;
         }
 
         float getTilt()
         {
             float direction = 0.0f;
 
-            if (Input.GetKey(KeyCode.D)) direction += 1.0f;
-            if (Input.GetKey(KeyCode.A)) direction -= 1.0f;
+            if (gyro.enabled)
+            {
+                direction = (gyro.attitude * Vector3.down).x;
+            }
+            else
+            {
+                if (Input.GetKey(KeyCode.D))
+                    direction += 1.0f;
+
+                if (Input.GetKey(KeyCode.A))
+                    direction -= 1.0f;
+            }
 
             return direction;
         }
