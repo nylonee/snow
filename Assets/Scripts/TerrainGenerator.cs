@@ -66,7 +66,8 @@ namespace COMP30019.Project2
         private void GenerateHeightmap()
         {
             float height;
-            float noise;
+            float baseNoise;
+            float extraNoise;
 
             float seed = Random.Range(0.0f, 100.0f);
 
@@ -77,12 +78,17 @@ namespace COMP30019.Project2
                 {
                     height = Mathf.Lerp(slopeTopHeight, slopeBottomHeight, (float)i / (heightmapResolution - 1));
 
-                    noise = Mathf.PerlinNoise(i * noiseVariation * 0.01f + seed, j * noiseVariation * 0.01f + seed);
-                    noise = Mathf.Clamp(noise, 0.0f, 1.0f);
-                    noise = noise - 0.5f;
-                    noise *= noiseMagnitude;
-                    
-                    SetHeightmapValue(i, j, height + noise);
+                    baseNoise = Mathf.PerlinNoise(i * noiseVariation * 0.01f + seed, j * noiseVariation * 0.01f + seed);
+                    baseNoise = Mathf.Clamp(baseNoise, 0.0f, 1.0f);
+                    baseNoise = baseNoise - 0.5f;
+                    baseNoise *= noiseMagnitude;
+
+                    extraNoise = Mathf.PerlinNoise(i * noiseVariation * 2 * 0.01f + seed, j * noiseVariation * 2 * 0.01f + seed);
+                    extraNoise = Mathf.Clamp(extraNoise, 0.0f, 1.0f);
+                    extraNoise = extraNoise - 0.5f;
+                    extraNoise *= noiseMagnitude / 2;
+
+                    SetHeightmapValue(i, j, height + baseNoise + extraNoise);
                 }
         }
 
@@ -120,8 +126,6 @@ namespace COMP30019.Project2
             System.Random random = new System.Random();
             int numTreePrototypes = terrainData.treePrototypes.Length;
             TreeInstance tree;
-
-            
 
             // Add trees
             for(int i = 0; i < numTreesAndRocks; i++)
