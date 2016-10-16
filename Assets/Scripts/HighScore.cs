@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace COMP30019.Project2
 {
-    public class TimeUpdate : MonoBehaviour
+    public class HighScore : MonoBehaviour
     {
         Text timeText;
         float timeStart;
@@ -14,15 +14,10 @@ namespace COMP30019.Project2
             timeText = GetComponent<Text>();
             timeStart = Time.time;
         }
-        
+
         void Update()
         {
-            timeText.text = (Time.time - timeStart).ToString("00:00.00");
-        }
-
-        public float getTime()
-        {
-            return Time.time - timeStart;
+            timeText.text = "High Score: " + PlayerPrefs.GetFloat("highscore").ToString("00:00.00");
         }
     }
 }
