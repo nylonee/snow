@@ -117,8 +117,6 @@ namespace COMP30019.Project2
             terrainData.splatPrototypes = terrainTexture;
             
             terrainObj.AddComponent(typeof(TerrainSplat));
-
-            MeshRenderer renderer = terrainObj.AddComponent<MeshRenderer>();
         }
 
         void AddTrees()
