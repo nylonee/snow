@@ -38,6 +38,9 @@ namespace COMP30019.Project2
         [Tooltip("Player prefab")]
         public GameObject playerPrefab;
 
+        [Tooltip("Slalom manager")]
+        public GameObject slalomManager;
+
         private GameObject terrainObj;
         private Terrain terrain;
         private TerrainData terrainData;
@@ -55,9 +58,11 @@ namespace COMP30019.Project2
             // Generate the splat, adding textures to the terrain
             GenerateTerrainSplat();
 
-            AddTreesAndRocks();
+            AddTrees();
 
             AddPlayer();
+
+            slalomManager.GetComponent<SlalomManager>().GenerateSlalom();
         }
 
         public float[,] GetHeightmap()
@@ -121,7 +126,7 @@ namespace COMP30019.Project2
             renderer.material.shader = shader;
         }
 
-        void AddTreesAndRocks()
+        void AddTrees()
         {
             // Clear current trees
             terrainData.treeInstances = new TreeInstance[numTrees];
@@ -135,7 +140,10 @@ namespace COMP30019.Project2
                 tree = new TreeInstance();
                 tree.color = Color.white;
                 tree.lightmapColor = Color.white;
-                tree.position = new Vector3(Random.value, 0.0f, Random.value);
+
+                /// Make sure trees dont spawn too close to where player starts
+                tree.position = new Vector3(Random.value, 0.0f, Random.Range(100.0f/heightmapResolution, 1.0f));
+
                 tree.prototypeIndex = random.Next(0, numTreePrototypes);
                 tree.heightScale = 1.0f;
                 tree.widthScale = 1.0f;

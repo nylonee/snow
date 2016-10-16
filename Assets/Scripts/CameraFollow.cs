@@ -33,6 +33,7 @@ namespace COMP30019.Project2
 
             cameraTransform.position = transform.position + normal*height + perp*distance;
             cameraTransform.LookAt(transform);
+            cameraTransform.rotation *= Quaternion.Euler(-10.0f, 0.0f, 0.0f);
         }
     }
 }
