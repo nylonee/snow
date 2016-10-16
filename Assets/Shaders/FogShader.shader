@@ -4,6 +4,7 @@
 	{
 		_MainTex("Base (RGB)", 2D) = "white" {}
 		_FogStart("Fog Start", Float) = 0.5
+		_FogColor("Fog Color", Color) = (1, 1, 1, 1)
 	}
 
 	SubShader
@@ -25,6 +26,7 @@
 			uniform sampler2D _MainTex;
 			uniform sampler2D _CameraDepthNormalsTexture;
 			uniform float _FogStart;
+			uniform float4 _FogColor;
 
 			struct v2f
 			{
@@ -58,7 +60,7 @@
 				// If past starting point for fog, linearly interpolate to grey (ending at max camera depth)
 				if(depthValue > _FogStart)
 				{
-					fragColor = lerp(fragColor, float4(0.5, 0.5, 0.5, 1.0), (depthValue - _FogStart) / (1.0 - _FogStart));
+					fragColor = lerp(fragColor, _FogColor, (depthValue - _FogStart) / (1.0 - _FogStart));
 				}
 
 				return fragColor;
