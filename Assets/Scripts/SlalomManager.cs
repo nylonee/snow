@@ -40,7 +40,8 @@ namespace COMP30019.Project2
 
             // Replace last checkpoint with goal
             GameObject lastCheckpoint = checkpointObjs.transform.GetChild(checkpointObjs.transform.childCount - 1).gameObject;
-            Vector3 goalPos = new Vector3(terrainWidth / 2, lastCheckpoint.transform.position.y, lastCheckpoint.transform.position.z);
+            Vector3 goalPos = new Vector3(terrainWidth / 2, 0.0f, lastCheckpoint.transform.position.z);
+            goalPos.y = terrainData.GetHeight((int)goalPos.x, (int)goalPos.z);
             Destroy(lastCheckpoint);
             Instantiate(goalPrefab, goalPos + goalPrefab.transform.position, goalPrefab.transform.rotation);
         }
