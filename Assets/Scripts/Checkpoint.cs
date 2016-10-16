@@ -6,7 +6,6 @@ namespace COMP30019.Project2
     public class Checkpoint : MonoBehaviour
     {
         public float distPastCheckpointToFail = 5.0f;
-
         private GameObject player;
 
         void Start()
@@ -16,9 +15,11 @@ namespace COMP30019.Project2
 
         void Update()
         {
-            if(player.transform.position.z > transform.position.z + distPastCheckpointToFail)
+            if(player == null) player = GameObject.FindGameObjectWithTag("Player");
+
+            if (player.transform.position.z > transform.position.z + distPastCheckpointToFail)
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(2);
             }
         }
 
