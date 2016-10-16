@@ -33,10 +33,7 @@ namespace COMP30019.Project2
         public Shader shader;
 
         [Tooltip("The number of trees and rocks to add to the terrain")]
-        public int numTreesAndRocks;
-
-        [Tooltip("Percentage of trees out of total trees+rocks")]
-        public float treePercentage;
+        public int numTrees;
 
         private GameObject terrainObj;
         private Terrain terrain;
@@ -122,26 +119,19 @@ namespace COMP30019.Project2
         void AddTreesAndRocks()
         {
             // Clear current trees
-            terrainData.treeInstances = new TreeInstance[numTreesAndRocks];
+            terrainData.treeInstances = new TreeInstance[numTrees];
             System.Random random = new System.Random();
             int numTreePrototypes = terrainData.treePrototypes.Length;
             TreeInstance tree;
 
             // Add trees
-            for(int i = 0; i < numTreesAndRocks; i++)
+            for(int i = 0; i < numTrees; i++)
             {
                 tree = new TreeInstance();
                 tree.color = Color.white;
                 tree.lightmapColor = Color.white;
                 tree.position = new Vector3(Random.value, 0.0f, Random.value);
-
-                // Tree (index 0) or rock (rest)
-                if (Random.value <= treePercentage)
-                    tree.prototypeIndex = 0;
-                else
-                    tree.prototypeIndex = random.Next(1, numTreePrototypes);
-
-                tree.rotation = Random.Range(0.0f, 2*Mathf.PI);
+                tree.prototypeIndex = random.Next(0, numTreePrototypes);
                 tree.heightScale = 1.0f;
                 tree.widthScale = 1.0f;
                 terrain.AddTreeInstance(tree);
