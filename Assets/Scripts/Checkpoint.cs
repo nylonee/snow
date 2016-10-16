@@ -18,7 +18,7 @@ namespace COMP30019.Project2
         {
             if(player.transform.position.z > transform.position.z + distPastCheckpointToFail)
             {
-                Application.LoadLevel(Application.loadedLevel);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(1);
             }
         }
 
