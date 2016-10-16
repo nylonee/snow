@@ -52,9 +52,6 @@ namespace COMP30019.Project2
             GenerateHeightmap();
             terrainData.SetHeights(0, 0, heightmap);
 
-            // Generate the splat, adding textures to the terrain
-            GenerateTerrainSplat();
-
             AddTrees();
 
             AddPlayer();
@@ -99,24 +96,6 @@ namespace COMP30019.Project2
         private void SetHeightmapValue(int x, int y, float value)
         {
             heightmap[x, y] = Mathf.Clamp(value, 0.0f, 1.0f);
-        }
-
-        void GenerateTerrainSplat()
-        {
-            SplatPrototype[] terrainTexture = new SplatPrototype[textures.Length];
-
-            for(int i = 0; i < terrainTexture.Length; i++)
-            {
-                terrainTexture[i] = new SplatPrototype();
-                byte[] fileData = System.IO.File.ReadAllBytes(textures[i]);
-                Texture2D tex = new Texture2D(2, 2);
-                tex.LoadImage(fileData);
-                terrainTexture[i].texture = tex;
-            }
-
-            terrainData.splatPrototypes = terrainTexture;
-            
-            terrainObj.AddComponent(typeof(TerrainSplat));
         }
 
         void AddTrees()
