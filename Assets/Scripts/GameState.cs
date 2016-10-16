@@ -5,17 +5,17 @@ namespace COMP30019.Project2
 {
     public class GameState : MonoBehaviour
     {
-        public void loadGame()
+        public void LoadGame()
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         }
 
-        public void endGame()
+        public void EndGame()
         {
             Application.Quit();
         }
 
-        public void mainMenu()
+        public void MainMenu()
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
