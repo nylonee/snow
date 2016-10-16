@@ -54,53 +54,23 @@
 				float4 fragColor = tex2D(_MainTex, i.screenPos);
 
 				// Start posterize
-				int counter = 1;
-				bool isRSet = false;
-				bool isGSet = false;
-				bool isBSet = false;
+				int counter;
+				float prev;
 				float cur;
 
-				while (!isRSet)
+				for(counter = 1; counter <= _NumLevels; counter++)
 				{
+					prev = (float)(counter - 1) / _NumLevels + 0.0001;
 					cur = (float)counter / _NumLevels;
 
-					if (fragColor.r < cur)
-					{
+					if (fragColor.r < cur && fragColor.r > prev)
 						fragColor.r = cur;
-						isRSet = true;
-					}
 
-					counter = counter + 1;
-				}
-
-				counter = 1;
-
-				while (!isGSet)
-				{
-					cur = (float)counter / _NumLevels;
-
-					if (fragColor.g < cur)
-					{
+					if (fragColor.g < cur && fragColor.g > prev)
 						fragColor.g = cur;
-						isGSet = true;
-					}
 
-					counter = counter + 1;
-				}
-
-				counter = 1;
-
-				while (!isBSet)
-				{
-					cur = (float)counter / _NumLevels;
-
-					if (fragColor.b < cur)
-					{
+					if (fragColor.b < cur && fragColor.b > prev)
 						fragColor.b = cur;
-						isBSet = true;
-					}
-
-					counter = counter + 1;
 				}
 				// End posterize
 
