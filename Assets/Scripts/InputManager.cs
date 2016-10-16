@@ -30,7 +30,7 @@ namespace COMP30019.Project2
         {
             float direction = 0.0f;
 
-            if (gyro.enabled)
+            if (gyro != null && gyro.enabled)
             {
                 direction = (gyro.attitude * Vector3.down).x;
             }
