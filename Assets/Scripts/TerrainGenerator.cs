@@ -125,22 +125,25 @@ namespace COMP30019.Project2
             terrainData.treeInstances = new TreeInstance[numTrees];
             System.Random random = new System.Random();
             int numTreePrototypes = terrainData.treePrototypes.Length;
-            TreeInstance tree;
+            float terrainWidth = terrainData.heightmapWidth;
+            GameObject treeObjs = new GameObject("Trees");
 
             // Add trees
             for(int i = 0; i < numTrees; i++)
             {
-                tree = new TreeInstance();
-                tree.color = Color.white;
-                tree.lightmapColor = Color.white;
-
                 /// Make sure trees dont spawn too close to where player starts
-                tree.position = new Vector3(Random.value, 0.0f, Random.Range(100.0f/heightmapResolution, 1.0f));
+                Vector3 pos = new Vector3(Random.value, 0.0f, Random.Range(100.0f / heightmapResolution, 1.0f)) * terrainWidth;
+                int prototypeIndex = random.Next(0, numTreePrototypes);
 
-                tree.prototypeIndex = random.Next(0, numTreePrototypes);
-                tree.heightScale = 1.0f;
-                tree.widthScale = 1.0f;
-                terrain.AddTreeInstance(tree);
+                // Add trees manually instead of as a terrain tree
+                GameObject treeObj = (GameObject)Instantiate
+                (
+                    terrainData.treePrototypes[prototypeIndex].prefab,
+                    new Vector3(pos.x, terrainData.GetHeight((int)(pos.x), (int)(pos.z)), pos.z),
+                    Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)
+                );
+
+                treeObj.transform.parent = treeObjs.transform;
             }
         }
 
