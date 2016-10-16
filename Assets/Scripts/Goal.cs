@@ -8,10 +8,12 @@ namespace COMP30019.Project2
         public float distPastCheckpointToFail = 5.0f;
 
         private GameObject player;
+        private TimeUpdate score;
 
         void Start()
         {
             player = GameObject.FindGameObjectWithTag("Player");
+            score = GameObject.FindGameObjectWithTag("Time").GetComponent<TimeUpdate>();
         }
 
         void Update()
@@ -19,7 +21,7 @@ namespace COMP30019.Project2
             if (player.transform.position.z > transform.position.z + distPastCheckpointToFail)
             {
                 // Missed goal
-                UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+                UnityEngine.SceneManagement.SceneManager.LoadScene(2);
             }
         }
 
@@ -28,6 +30,9 @@ namespace COMP30019.Project2
             if (other.gameObject.tag == "Player")
             {
                 // GOL!!!!!!!!!!!!!
+                if (PlayerPrefs.GetFloat("highscore") > score.getTime() || PlayerPrefs.GetFloat("highscore") == 0f) PlayerPrefs.SetFloat("highscore", score.getTime());
+                
+                UnityEngine.SceneManagement.SceneManager.LoadScene(2);
                 Destroy(this);
             }
         }

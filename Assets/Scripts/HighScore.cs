@@ -17,7 +17,7 @@ namespace COMP30019.Project2
 
         void Update()
         {
-            timeText.text = "High Score: " + PlayerPrefs.GetFloat("highscore").ToString("00:00.00");
+            timeText.text = "High Score: " + PlayerPrefs.GetFloat("highscore").ToString("00.00");
         }
     }
 }

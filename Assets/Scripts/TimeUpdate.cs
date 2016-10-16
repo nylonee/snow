@@ -17,7 +17,7 @@ namespace COMP30019.Project2
         
         void Update()
         {
-            timeText.text = (Time.time - timeStart).ToString("00:00.00");
+            timeText.text = (Time.time - timeStart).ToString("00.00");
         }
 
         public float getTime()
