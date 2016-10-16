@@ -56,7 +56,7 @@
 				// ---- Posterize ----
 				fragColor.r = (float)floor((fragColor.r * _NumLevels)) / _NumLevels;
 				fragColor.g = (float)floor((fragColor.g * _NumLevels)) / _NumLevels;
-				fragColor.b = (float)floor ((fragColor.b * _NumLevels)) / _NumLevels;
+				fragColor.b = (float)floor((fragColor.b * _NumLevels)) / _NumLevels;
 
 				if(_IsOutlineEnabled < 1)
 				{
