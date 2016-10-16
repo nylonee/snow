@@ -8,7 +8,7 @@ namespace COMP30019.Project2
         public float height = 10; // The height of the camera above the snowboarder
         public float distance = 10; // The distance of the camera behind the snowboarder
 
-        private Vector3 orientation = Vector3.right; // 1 = normal, 2 = looking back, 3 = looking right, 4 = looking left
+        public Vector3 orientation = Vector3.right; // 1 = normal, 2 = looking back, 3 = looking right, 4 = looking left
 
         private Terrain terrain;
         private TerrainData terrainData;
@@ -19,26 +19,6 @@ namespace COMP30019.Project2
         void Start()
         {
             cameraTransform = Camera.main.transform;
-        }
-
-        public void lookForward()
-        {
-            orientation = Vector3.right;
-        }
-
-        public void lookBackward()
-        {
-            orientation = Vector3.left;
-        }
-
-        public void lookLeft()
-        {
-            orientation = Vector3.forward;
-        }
-
-        public void lookRight()
-        {
-            orientation = Vector3.back;
         }
 
         void LateUpdate()
