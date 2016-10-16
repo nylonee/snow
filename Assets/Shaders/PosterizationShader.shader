@@ -58,6 +58,7 @@
 				float prev;
 				float cur;
 
+				[loop]
 				for(counter = 1; counter <= _NumLevels; counter++)
 				{
 					prev = (float)(counter - 1) / _NumLevels + 0.0001;
