@@ -126,6 +126,7 @@ namespace COMP30019.Project2
             System.Random random = new System.Random();
             int numTreePrototypes = terrainData.treePrototypes.Length;
             TreeInstance tree;
+            float terrainWidth = terrainData.heightmapWidth;
 
             // Add trees
             for(int i = 0; i < numTrees; i++)
@@ -138,6 +139,16 @@ namespace COMP30019.Project2
                 tree.position = new Vector3(Random.value, 0.0f, Random.Range(100.0f/heightmapResolution, 1.0f));
 
                 tree.prototypeIndex = random.Next(0, numTreePrototypes);
+
+                // Add tree colliders manually
+                GameObject treeColliderObj = new GameObject("Tree Collider");
+                treeColliderObj.transform.position = new Vector3(tree.position.x * terrainWidth, terrainData.GetHeight((int)(tree.position.x * terrainWidth), (int)(tree.position.z * terrainWidth)), tree.position.z * terrainWidth);
+                CapsuleCollider prefabCollider = terrainData.treePrototypes[tree.prototypeIndex].prefab.GetComponent<CapsuleCollider>();
+                CapsuleCollider collider = treeColliderObj.AddComponent<CapsuleCollider>();
+                collider.center = prefabCollider.center;
+                collider.radius = prefabCollider.radius;
+                collider.height = prefabCollider.height;
+
                 tree.heightScale = 1.0f;
                 tree.widthScale = 1.0f;
                 terrain.AddTreeInstance(tree);
