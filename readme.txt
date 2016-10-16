@@ -1,6 +1,9 @@
+nmirpuri 562439
+jgrooby 587823
+
 ===========================================================
 ========== What does the application do ===========================================================
-Snow is a third-person action game developed in Unity, where you are a snowboarder making your way down the slope, passing through all the slalom gates and avoiding the obstacles. Slopes are procedurally generated and randomly populated with trees and rocks. The game makes heavy use of Unityís physics engine to control the way that the snowboarder interacts with the environment. The game is timed, and your fasted time is saved so that you can attempt to beat your best time. 
+Snow is a third-person action game developed in Unity, where you are a snowboarder making your way down the slope, passing through all the slalom gates and avoiding the obstacles. Slopes are procedurally generated and randomly populated with trees and rocks. The game makes heavy use of Unity‚Äôs physics engine to control the way that the snowboarder interacts with the environment. The game is timed, and your fasted time is saved so that you can attempt to beat your best time. 
 
 ===========================================================
 ========= How does one use it
@@ -15,13 +18,13 @@ Whether you win by making it to the last gate, or you lose by missing one, you i
 ===========================================================
 ========= How we modelled objects and entities
 ===========================================================
-The terrain is generated using Unityís built-in terrain engine, with a heightmap generated using perlin noise. The terrain is then populated with randomly placed trees and rocks. The snowboarder is made out of a number of scaled cube meshes, which are rigidbody physics objects attached to each other using Unityís joint components. The checkpoint and goal slalom gates are also made out of scaled cube meshes. Collider components are used on the terrain, gates, trees, and rocks in order to handle collisions with the player. A particle system is also used to generate a snowing effect.
+The terrain is generated using Unity‚Äôs built-in terrain engine, with a heightmap generated using perlin noise. The terrain is then populated with randomly placed trees and rocks. The snowboarder is made out of a number of scaled cube meshes, which are rigidbody physics objects attached to each other using Unity‚Äôs joint components. The checkpoint and goal slalom gates are also made out of scaled cube meshes. Collider components are used on the terrain, gates, trees, and rocks in order to handle collisions with the player. A particle system is also used to generate a snowing effect.
 
 
 ===========================================================
 ========= How we handled graphics and camera motion
 ===========================================================
-Two custom HLSL/Cg shaders are used, a fog shader and a posterization shader. Both of these shaders are used for postprocessing image effects (https://docs.unity3d.com/Manual/comp-ImageEffects.html) using the cameraís depth/normal textures. The fog shader uses depth values to interpolate a fragmentís color with some amount of grey (or whichever fog color is chosen) depending on the depth value of that fragment. The posterization shader snaps a fragmentís red, green and blue color values to one of few different ìlevelsî, giving a pleasing, abstract visual aesthetic. Additionally, the posterization shader can optionally apply outlines by comparing the depth and normal values of the current fragment with the depth and normal values of nearby fragments to determine sudden changes. Meshes in the game use simple standard Unity shaders.
+Two custom HLSL/Cg shaders are used, a fog shader and a posterization shader. Both of these shaders are used for postprocessing image effects (https://docs.unity3d.com/Manual/comp-ImageEffects.html) using the camera‚Äôs depth/normal textures. The fog shader uses depth values to interpolate a fragment‚Äôs color with some amount of grey (or whichever fog color is chosen) depending on the depth value of that fragment. The posterization shader snaps a fragment‚Äôs red, green and blue color values to one of few different ‚Äúlevels‚Äù, giving a pleasing, abstract visual aesthetic. Additionally, the posterization shader can optionally apply outlines by comparing the depth and normal values of the current fragment with the depth and normal values of nearby fragments to determine sudden changes. Meshes in the game use simple standard Unity shaders.
 
 The camera follows behind the snowboarder, using the sum of three vectors to determine its position: The normal of the terrain beneath the snowboarder at any point in time, the position of the player, and the vector perpendicular to the normal, in the direction that the camera is desired (for example, if the camera is desired to be directly behind the player, the perpendicular would be the cross product of the Normal beneath the player, and a Vector3.Right). This works better than a static camera that is a set distance, because it allows for the camera to adjust to the slope of the mountain (steeper parts will make the camera rise higher, whereas flat terrains will make the camera dip down so that you see more of the horizon). At all times the camera will look at the snowboarder.
 
