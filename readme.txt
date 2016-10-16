@@ -30,5 +30,9 @@ Two custom HLSL/Cg shaders are used, a fog shader and a posterization shader. Bo
 The camera follows behind the snowboarder, using the sum of three vectors to determine its position: The normal of the terrain beneath the snowboarder at any point in time, the position of the player, and the vector perpendicular to the normal, in the direction that the camera is desired (for example, if the camera is desired to be directly behind the player, the perpendicular would be the cross product of the Normal beneath the player, and a Vector3.Right). This works better than a static camera that is a set distance, because it allows for the camera to adjust to the slope of the mountain (steeper parts will make the camera rise higher, whereas flat terrains will make the camera dip down so that you see more of the horizon). At all times the camera will look at the snowboarder.
 
 ===========================================================
-========= External code/sources ===========================================================
-The only external assets that we have used are the low_poly_styled_rocks (https://www.assetstore.unity3d.com/en/#!/content/43486) and low_poly_styled_trees (https://www.assetstore.unity3d.com/en/#!/content/43103) found on the Unity Asset store.
+========= External code/sources
+===========================================================
+Art assets:
+* Low poly styled rocks (https://www.assetstore.unity3d.com/en/#!/content/43486)
+* Low poly styled trees (https://www.assetstore.unity3d.com/en/#!/content/43103)
+* Snow texture (http://philippel.deviantart.com/art/Snow-Texture-273723423)
