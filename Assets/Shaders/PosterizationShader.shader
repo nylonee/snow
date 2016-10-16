@@ -53,35 +53,17 @@
 				// Get current color
 				float4 fragColor = tex2D(_MainTex, i.screenPos);
 
-				// Start posterize
-				int counter;
-				float prev;
-				float cur;
-
-				[loop]
-				for(counter = 1; counter <= _NumLevels; counter++)
-				{
-					prev = (float)(counter - 1) / _NumLevels + 0.0001;
-					cur = (float)counter / _NumLevels;
-
-					if (fragColor.r < cur && fragColor.r > prev)
-						fragColor.r = cur;
-
-					if (fragColor.g < cur && fragColor.g > prev)
-						fragColor.g = cur;
-
-					if (fragColor.b < cur && fragColor.b > prev)
-						fragColor.b = cur;
-				}
-				// End posterize
+				// ---- Posterize ----
+				fragColor.r = (float)floor((fragColor.r * _NumLevels)) / _NumLevels;
+				fragColor.g = (float)floor((fragColor.g * _NumLevels)) / _NumLevels;
+				fragColor.b = (float)floor((fragColor.b * _NumLevels)) / _NumLevels;
 
 				if(_IsOutlineEnabled < 1)
 				{
 					return fragColor;
 				}
 
-				// Start outline
-
+				// ---- Outline ----
 				// May have to invert y for depth texture
 				float4 screenPosDepth = i.screenPos;
 				#if UNITY_UV_STARTS_AT_TOP
