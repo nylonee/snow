@@ -5,8 +5,14 @@ namespace COMP30019.Project2
 {
     public class CameraFollow : MonoBehaviour
     {
-        public float height = 10; // The height of the camera above the snowboarder
-        public float distance = 10; // The distance of the camera behind the snowboarder
+        [Tooltip("The height of the camera above the snowboarder")]
+        public float height = 10;
+
+        [Tooltip("The distance of the camera behind the snowboarder")]
+        public float distance = 10;
+
+        [Tooltip("In degrees")]
+        public float maxCameraPan = 90.0f;
 
         public Vector3 orientation = Vector3.right; // 1 = normal, 2 = looking back, 3 = looking right, 4 = looking left
 
@@ -30,6 +36,8 @@ namespace COMP30019.Project2
                 player = GameObject.FindGameObjectWithTag("Player");
             }
 
+            CameraPan();
+
             float y = (float)player.transform.position.y / (float)terrainData.alphamapHeight;
             float x = (float)player.transform.position.x / (float)terrainData.alphamapWidth;
 
@@ -42,6 +50,17 @@ namespace COMP30019.Project2
             cameraTransform.position += new Vector3{ x = 0f, y = 7f, z = 0f};
             cameraTransform.LookAt(transform);
             cameraTransform.rotation *= Quaternion.Euler(-10.0f, 0.0f, 0.0f);
+        }
+
+        void CameraPan()
+        {
+            if (Input.GetMouseButton(0))
+            {
+                float panAmount = 2 * (Input.mousePosition.x / Screen.width) - 1.0f; // between -1 and 1
+                orientation = Quaternion.Euler(0.0f, 90.0f * panAmount, 0.0f) * Vector3.right;
+            }
+            else
+                orientation = Vector3.right;
         }
     }
 }
