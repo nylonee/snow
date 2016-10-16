@@ -32,7 +32,7 @@ namespace COMP30019.Project2
 
             if (gyro != null && gyro.enabled)
             {
-                direction = (gyro.attitude * Vector3.down).x;
+                direction = (gyro.attitude * Vector3.right).x;
             }
             else
             {

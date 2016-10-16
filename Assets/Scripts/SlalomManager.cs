@@ -12,6 +12,7 @@ namespace COMP30019.Project2
         public bool isEnabled = true;
 
         public GameObject checkpointPrefab;
+        public GameObject goalPrefab;
 
         public void GenerateSlalom()
         {
@@ -26,16 +27,22 @@ namespace COMP30019.Project2
             TerrainData terrainData = Terrain.activeTerrain.terrainData;
             float terrainWidth = terrainData.heightmapWidth;
             GameObject checkpointObjs = new GameObject("Checkpoints");
-            
-            while(curZDist < terrainWidth)
+
+            while (curZDist < terrainWidth)
             {
-                Vector3 pos = new Vector3(terrainWidth / 2.0f + Random.Range(minXDist, maxXDist) * leftOrRight, 0.0f, curZDist + zInterval);
+                Vector3 pos = new Vector3(terrainWidth / 2.0f + Random.Range(minXDist, maxXDist) * leftOrRight, 0.0f, curZDist);
                 pos.y = terrainData.GetHeight((int)pos.x, (int)pos.z);
                 GameObject checkpointObj = (GameObject)Instantiate(checkpointPrefab, pos + checkpointPrefab.transform.position, checkpointPrefab.transform.rotation);
                 checkpointObj.transform.parent = checkpointObjs.transform;
-                curZDist = pos.z;
+                curZDist += zInterval;
                 leftOrRight = flip(leftOrRight);
             }
+
+            // Replace last checkpoint with goal
+            GameObject lastCheckpoint = checkpointObjs.transform.GetChild(checkpointObjs.transform.childCount - 1).gameObject;
+            Vector3 goalPos = new Vector3(terrainWidth / 2, lastCheckpoint.transform.position.y, lastCheckpoint.transform.position.z);
+            Destroy(lastCheckpoint);
+            Instantiate(goalPrefab, goalPos + goalPrefab.transform.position, goalPrefab.transform.rotation);
         }
 
         private int flip(int leftOrRight)

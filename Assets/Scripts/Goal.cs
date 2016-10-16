@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace COMP30019.Project2
 {
-    public class Checkpoint : MonoBehaviour
+    public class Goal : MonoBehaviour
     {
         public float distPastCheckpointToFail = 5.0f;
 
@@ -16,17 +16,18 @@ namespace COMP30019.Project2
 
         void Update()
         {
-            if(player.transform.position.z > transform.position.z + distPastCheckpointToFail)
+            if (player.transform.position.z > transform.position.z + distPastCheckpointToFail)
             {
-                // Missed checkpoint
+                // Missed goal
                 UnityEngine.SceneManagement.SceneManager.LoadScene(1);
             }
         }
 
         void OnTriggerEnter(Collider other)
         {
-            if(other.gameObject.tag == "Player")
+            if (other.gameObject.tag == "Player")
             {
+                // GOL!!!!!!!!!!!!!
                 Destroy(this);
             }
         }
