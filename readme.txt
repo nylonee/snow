@@ -2,7 +2,8 @@ nmirpuri 562439
 jgrooby 587823
 
 ===========================================================
-========== What does the application do ===========================================================
+========== What does the application do 
+===========================================================
 Snow is a third-person action game developed in Unity, where you are a snowboarder making your way down the slope, passing through all the slalom gates and avoiding the obstacles. Slopes are procedurally generated and randomly populated with trees and rocks. The game makes heavy use of Unity’s physics engine to control the way that the snowboarder interacts with the environment. The game is timed, and your fasted time is saved so that you can attempt to beat your best time. 
 
 ===========================================================
