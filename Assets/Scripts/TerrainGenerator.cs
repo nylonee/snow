@@ -37,8 +37,7 @@ namespace COMP30019.Project2
 
         [Tooltip("Slalom manager")]
         public GameObject slalomManager;
-
-        private GameObject terrainObj;
+        
         private Terrain terrain;
         private TerrainData terrainData;
         private float[,] heightmap;
@@ -46,7 +45,6 @@ namespace COMP30019.Project2
         public void Start()
         {
             terrain = Terrain.activeTerrain;
-            terrainObj = terrain.gameObject;
             terrainData = terrain.terrainData;
 
             GenerateHeightmap();
