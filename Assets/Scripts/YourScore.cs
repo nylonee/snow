@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace COMP30019.Project2
 {
-    public class HighScore : MonoBehaviour
+    public class YourScore : MonoBehaviour
     {
         Text timeText;
 
@@ -15,7 +15,11 @@ namespace COMP30019.Project2
 
         void Update()
         {
-            timeText.text = "Best Time: " + PlayerPrefs.GetFloat("highscore").ToString("00.00");
+            float score = PlayerPrefs.GetFloat("yourscore");
+            if (score != 0f)
+                timeText.text = "Your Time: " + score.ToString("00.00");
+            else
+                timeText.text = "";
         }
     }
 }

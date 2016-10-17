@@ -30,6 +30,7 @@ namespace COMP30019.Project2
             if (other.gameObject.tag == "Player")
             {
                 // GOL!!!!!!!!!!!!!
+                PlayerPrefs.SetFloat("yourscore", score.getTime());
                 if (PlayerPrefs.GetFloat("highscore") > score.getTime() || PlayerPrefs.GetFloat("highscore") == 0f) PlayerPrefs.SetFloat("highscore", score.getTime());
                 
                 UnityEngine.SceneManagement.SceneManager.LoadScene(2);
