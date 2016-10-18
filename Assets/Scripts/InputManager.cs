@@ -49,7 +49,12 @@ namespace COMP30019.Project2
         void FixedUpdate()
         {
             if (Input.GetKeyDown("g"))
-                gyro.enabled = !gyro.enabled;
+            {
+                if (gyro.enabled)
+                    gyro.enabled = false;
+                else if (SystemInfo.supportsGyroscope)
+                    gyro.enabled = true;
+            }
 
             // Normal movement if touching ground
             if (isTouchingGround)
