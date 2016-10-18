@@ -32,11 +32,14 @@ namespace COMP30019.Project2
         [Tooltip("The number of trees and rocks to add to the terrain")]
         public int numTrees;
 
-        [Tooltip("Player prefab")]
-        public GameObject playerPrefab;
-
         [Tooltip("Slalom manager")]
         public GameObject slalomManager;
+
+        [Tooltip("Player prefab")]
+        public GameObject playerPrefab;
+        
+        [Tooltip("Tree prefabs")]
+        public GameObject[] treePrefabs;
         
         private Terrain terrain;
         private TerrainData terrainData;
@@ -98,10 +101,8 @@ namespace COMP30019.Project2
 
         void AddTrees()
         {
-            // Clear current trees
-            terrainData.treeInstances = new TreeInstance[numTrees];
             System.Random random = new System.Random();
-            int numTreePrototypes = terrainData.treePrototypes.Length;
+            int numTreeTypes = treePrefabs.Length;
             float terrainWidth = terrainData.heightmapWidth;
             GameObject treeObjs = new GameObject("Trees");
 
@@ -110,12 +111,12 @@ namespace COMP30019.Project2
             {
                 /// Make sure trees dont spawn too close to where player starts
                 Vector3 pos = new Vector3(Random.value, 0.0f, Random.Range(100.0f / heightmapResolution, 1.0f)) * terrainWidth;
-                int prototypeIndex = random.Next(0, numTreePrototypes);
+                int treeTypeIndex = random.Next(0, numTreeTypes);
 
                 // Add trees manually instead of as a terrain tree
                 GameObject treeObj = (GameObject)Instantiate
                 (
-                    terrainData.treePrototypes[prototypeIndex].prefab,
+                    treePrefabs[treeTypeIndex],
                     new Vector3(pos.x, terrainData.GetHeight((int)(pos.x), (int)(pos.z)), pos.z),
                     Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)
                 );
