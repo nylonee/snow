@@ -48,6 +48,9 @@ namespace COMP30019.Project2
 
         void FixedUpdate()
         {
+            if (Input.GetButtonDown("g"))
+                gyro.enabled = !gyro.enabled;
+
             // Normal movement if touching ground
             if (isTouchingGround)
             {
