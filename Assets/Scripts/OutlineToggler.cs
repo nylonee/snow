@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace COMP30019.TeamBronze
+namespace COMP30019.Project2
 {
     public class OutlineToggler : MonoBehaviour
     {

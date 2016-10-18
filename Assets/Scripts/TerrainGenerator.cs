@@ -121,6 +121,7 @@ namespace COMP30019.Project2
                 );
 
                 treeObj.transform.parent = treeObjs.transform;
+                treeObj.tag = "Tree";
             }
         }
 
