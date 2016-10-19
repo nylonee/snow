@@ -19,6 +19,7 @@ namespace COMP30019.Project2
 
             if (player.transform.position.z > transform.position.z + distPastCheckpointToFail)
             {
+                PlayerPrefs.SetFloat("yourscore", GameObject.FindGameObjectWithTag("Time").GetComponent<TimeUpdate>().getTime());
                 UnityEngine.SceneManagement.SceneManager.LoadScene(2);
             }
         }
