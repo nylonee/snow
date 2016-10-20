@@ -11,8 +11,6 @@ namespace COMP30019.Project2
 
             if (collisionObj.tag == "Tree")
                 Destroy(collisionObj);
-
-            Debug.Log("boom");
         }
 
         void OnTriggerEnter(Collider other)
@@ -21,8 +19,6 @@ namespace COMP30019.Project2
 
             if (collisionObj.tag == "Tree")
                 Destroy(collisionObj);
-
-            Debug.Log("boom");
         }
 
     }
