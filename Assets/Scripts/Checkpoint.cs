@@ -5,7 +5,9 @@ namespace COMP30019.Project2
 {
     public class Checkpoint : MonoBehaviour
     {
+        [Tooltip("Distance past this checkpoint at which the player fails the game")]
         public float distPastCheckpointToFail = 5.0f;
+
         private GameObject player;
 
         void Start()

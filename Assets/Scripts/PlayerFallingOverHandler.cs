@@ -11,9 +11,13 @@ namespace COMP30019.Project2
 
         void Update()
         {
+            // If player is fallen over for more than 3 seconds, they lose
             if (isTouchingGround)
                 if (t < 0.0f)
+                {
+                    PlayerPrefs.SetString("endgamestate", "lose");
                     SceneManager.LoadScene(2);
+                }
                 else
                     t -= Time.deltaTime;
         }

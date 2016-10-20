@@ -8,9 +8,16 @@ namespace COMP30019.Project2
 {
     public class InputManager : MonoBehaviour
     {
+        [Tooltip("Forward force applied to player")]
         public float force = 1250.0f;
+
+        [Tooltip("Rotation speed of the player")]
         public float rotationSpeed = 75.0f;
+
+        [Tooltip("Amount of torque applied to 'lift' the player as they turn")]
         public float turnLift = 750.0f;
+
+        [Tooltip("Amount to artificially assist the player in staying upright")]
         public float uprightAssist = 1.0f;
 
         private bool isTouchingGround = false;

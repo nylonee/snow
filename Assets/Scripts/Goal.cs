@@ -5,7 +5,8 @@ namespace COMP30019.Project2
 {
     public class Goal : MonoBehaviour
     {
-        public float distPastCheckpointToFail = 5.0f;
+        [Tooltip("Distance past the goal at which the player fails the game")]
+        public float distPastGoalToFail = 5.0f;
 
         private GameObject player;
         private TimeUpdate score;
@@ -18,11 +19,11 @@ namespace COMP30019.Project2
 
         void Update()
         {
-            if (player.transform.position.z > transform.position.z + distPastCheckpointToFail)
+            if (player.transform.position.z > transform.position.z + distPastGoalToFail)
             {
                 // Missed goal
-                UnityEngine.SceneManagement.SceneManager.LoadScene(2);
                 PlayerPrefs.SetString("endgamestate", "lose");
+                UnityEngine.SceneManagement.SceneManager.LoadScene(2);
             }
         }
 
