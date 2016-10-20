@@ -1,6 +1,8 @@
 nmirpuri 562439
 jgrooby 587823
 
+Gameplay video:
+https://www.youtube.com/watch?v=7ECAYQyZ8vM
 
 ===========================================================
 ========== What does the application do
