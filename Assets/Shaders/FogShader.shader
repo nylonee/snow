@@ -1,4 +1,4 @@
-﻿Shader "Custom/Fog"
+﻿Shader "Custom/FogShader"
 {
 	Properties
 	{
@@ -19,7 +19,8 @@
 		{
 			CGPROGRAM
 			#pragma vertex vert_img
-			#pragma fragment frag
+			#pragma fragment frag#
+			#pragma target 3.0
 
 			#include "UnityCG.cginc"
 
