@@ -5,7 +5,9 @@ namespace COMP30019.Project2
 {
     public class Checkpoint : MonoBehaviour
     {
+        [Tooltip("Distance past this checkpoint at which the player fails the game")]
         public float distPastCheckpointToFail = 5.0f;
+
         private GameObject player;
 
         void Start()
@@ -17,15 +19,17 @@ namespace COMP30019.Project2
         {
             if(player == null) player = GameObject.FindGameObjectWithTag("Player");
 
+            // Check if player missed the checkpoint
             if (player.transform.position.z > transform.position.z + distPastCheckpointToFail)
             {
-                PlayerPrefs.SetFloat("yourscore", GameObject.FindGameObjectWithTag("Time").GetComponent<TimeUpdate>().getTime());
+                PlayerPrefs.SetString("endgamestate", "lose");
                 UnityEngine.SceneManagement.SceneManager.LoadScene(2);
             }
         }
 
         void OnTriggerEnter(Collider other)
         {
+            // Remove this script if player passes through the checkpoint
             if(other.gameObject.tag == "Player")
             {
                 Destroy(this);

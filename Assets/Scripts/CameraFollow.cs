@@ -14,7 +14,8 @@ namespace COMP30019.Project2
         [Tooltip("In degrees")]
         public float maxCameraPan = 90.0f;
 
-        public Vector3 orientation = Vector3.right; // 1 = normal, 2 = looking back, 3 = looking right, 4 = looking left
+        [HideInInspector]
+        public Vector3 orientation = Vector3.right;
 
         private Terrain terrain;
         private TerrainData terrainData;
@@ -29,6 +30,7 @@ namespace COMP30019.Project2
 
         void LateUpdate()
         {
+            // Get terrain and player
             if (terrain == null || terrainData == null || player == null)
             {
                 terrain = Terrain.activeTerrain;
@@ -36,11 +38,13 @@ namespace COMP30019.Project2
                 player = GameObject.FindGameObjectWithTag("Player");
             }
 
+            // Adjust camera pan
             CameraPan();
 
             float x = player.transform.position.x / terrainData.heightmapWidth;
             float z = player.transform.position.z / terrainData.heightmapWidth;
 
+            // Positions camera based on terrain normals
             Vector3 normal = terrainData.GetInterpolatedNormal(x, z);
             normal.x = -normal.x;
             Vector3 perp = Vector3.Cross(normal, orientation);
@@ -51,6 +55,7 @@ namespace COMP30019.Project2
             cameraTransform.rotation *= Quaternion.Euler(-10.0f, 0.0f, 0.0f);
         }
 
+        // Pans the camera using mouse input
         void CameraPan()
         {
             if (Input.GetMouseButton(0))

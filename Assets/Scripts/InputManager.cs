@@ -8,9 +8,16 @@ namespace COMP30019.Project2
 {
     public class InputManager : MonoBehaviour
     {
+        [Tooltip("Forward force applied to player")]
         public float force = 1250.0f;
+
+        [Tooltip("Rotation speed of the player")]
         public float rotationSpeed = 75.0f;
+
+        [Tooltip("Amount of torque applied to 'lift' the player as they turn")]
         public float turnLift = 750.0f;
+
+        [Tooltip("Amount to artificially assist the player in staying upright")]
         public float uprightAssist = 1.0f;
 
         private bool isTouchingGround = false;
@@ -22,8 +29,10 @@ namespace COMP30019.Project2
             rb = GetComponent<Rigidbody>();
             gyro = Input.gyro;
 
-            if (SystemInfo.supportsGyroscope)
+            if (PlayerPrefs.GetInt("gyro") == 1)
                 gyro.enabled = true;
+            else
+                gyro.enabled = false;
         }
 
         float getTilt()
@@ -51,9 +60,15 @@ namespace COMP30019.Project2
             if (Input.GetKeyDown("g"))
             {
                 if (gyro.enabled)
+                {
                     gyro.enabled = false;
+                    PlayerPrefs.SetInt("gyro", 0);
+                }
                 else if (SystemInfo.supportsGyroscope)
+                {
                     gyro.enabled = true;
+                    PlayerPrefs.SetInt("gyro", 1);
+                }
             }
 
             // Normal movement if touching ground
@@ -64,7 +79,7 @@ namespace COMP30019.Project2
                 rb.AddForce(rb.rotation * Vector3.left * force * Time.deltaTime);
 
                 // Try to keep upright
-                rb.MoveRotation(Quaternion.Euler(Mathf.MoveTowardsAngle(fixAngle(rb.rotation.eulerAngles.x), 0.0f, uprightAssist * Time.deltaTime), rb.rotation.eulerAngles.y, rb.rotation.eulerAngles.z));
+                rb.MoveRotation(Quaternion.Euler(Mathf.MoveTowardsAngle(FixAngle(rb.rotation.eulerAngles.x), 0.0f, uprightAssist * Time.deltaTime), rb.rotation.eulerAngles.y, rb.rotation.eulerAngles.z));
             }
 
             // If not touching ground, only rotate
@@ -86,7 +101,7 @@ namespace COMP30019.Project2
                 isTouchingGround = false;
         }
 
-        private float fixAngle(float angle)
+        private float FixAngle(float angle)
         {
             if (angle < 0.0f)
                 angle += 360.0f;

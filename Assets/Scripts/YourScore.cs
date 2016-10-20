@@ -16,10 +16,18 @@ namespace COMP30019.Project2
         void Update()
         {
             float score = PlayerPrefs.GetFloat("yourscore");
-            if (score != 0f)
-                timeText.text = "Your Time: " + score.ToString("00.00");
+
+            if (PlayerPrefs.GetString("endgamestate") == "win")
+            {
+                if (score != 0f)
+                    timeText.text = "Your Time: " + score.ToString("00.00");
+                else
+                    timeText.text = "";
+            }
             else
-                timeText.text = "";
+            {
+                timeText.text = "You failed to complete the slalom course!";
+            }
         }
     }
 }

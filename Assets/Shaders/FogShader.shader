@@ -1,4 +1,4 @@
-﻿Shader "Custom/Fog"
+﻿Shader "Custom/FogShader"
 {
 	Properties
 	{
@@ -20,6 +20,7 @@
 			CGPROGRAM
 			#pragma vertex vert_img
 			#pragma fragment frag
+			#pragma target 3.0
 
 			#include "UnityCG.cginc"
 
@@ -48,14 +49,8 @@
 				// Get current color
 				float4 fragColor = tex2D(_MainTex, i.screenPos);
 
-				// May have to invert y for depth texture
-				float4 screenPosDepth = i.screenPos;
-				//#if UNITY_UV_STARTS_AT_TOP
-				//screenPosDepth.y = 1 - screenPosDepth.y;
-				//#endif
-
 				// Get depth value from 0-1
-				float depthValue = DecodeFloatRG(tex2D(_CameraDepthNormalsTexture, screenPosDepth.xy).zw);
+				float depthValue = DecodeFloatRG(tex2D(_CameraDepthNormalsTexture, i.screenPos.xy).zw);
 
 				// If past starting point for fog, linearly interpolate to grey (ending at max camera depth)
 				if(depthValue > _FogStart)

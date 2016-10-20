@@ -5,15 +5,28 @@ namespace COMP30019.Project2
 {
     public class SlalomManager : MonoBehaviour
     {
+        [Tooltip("Minimum x distance from the center of the terrain for a checkpoint")]
         public float minXDist = 5.0f;
+
+        [Tooltip("Maximum x distance from the center of the terrain for a checkpoint")]
         public float maxXDist = 10.0f;
+
+        [Tooltip("Z distance between each checkpoint")]
         public float zInterval = 75.0f;
+
+        [Tooltip("Z distance from the start of the terrain to the first checkpoint")]
         public float startingZDist = 100.0f;
+
+        [Tooltip("Generate slalom checkpoints/goal?")]
         public bool isEnabled = true;
 
+        [Tooltip("Slalom checkpoint prefab")]
         public GameObject checkpointPrefab;
+
+        [Tooltip("Slalom goal prefab")]
         public GameObject goalPrefab;
 
+        // Generates checkpoints along the terrain using the public variable parameters
         public void GenerateSlalom()
         {
             if (!isEnabled)

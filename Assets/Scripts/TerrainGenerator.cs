@@ -32,7 +32,7 @@ namespace COMP30019.Project2
         [Tooltip("The number of trees and rocks to add to the terrain")]
         public int numTrees;
 
-        [Tooltip("Slalom manager")]
+        [Tooltip("Slalom manager GameObject")]
         public GameObject slalomManager;
 
         [Tooltip("Player prefab")]
@@ -40,31 +40,64 @@ namespace COMP30019.Project2
         
         [Tooltip("Tree prefabs")]
         public GameObject[] treePrefabs;
-        
+
+        [Tooltip("Min XZ pos of the player")]
+        public Vector2 playerMinXZ = new Vector2(0.0f, 0.0f);
+
+        [Tooltip("Max XZ pos of the player")]
+        public Vector2 playerMaxXZ = new Vector2(1024.0f, 1024.0f);
+
         private Terrain terrain;
         private TerrainData terrainData;
         private float[,] heightmap;
+        private GameObject playerBoardObj;
 
         public void Start()
         {
+            // Get terrain
             terrain = Terrain.activeTerrain;
             terrainData = terrain.terrainData;
 
+            // Generate heightmap and apply to terrain
             GenerateHeightmap();
             terrainData.SetHeights(0, 0, heightmap);
 
+            // Add trees (and rocks, which we treat the same as trees) to terrain
             AddTrees();
 
+            // Add the player at an appropriate location
             AddPlayer();
 
+            // Generate the slalom checkpoints
             slalomManager.GetComponent<SlalomManager>().GenerateSlalom();
         }
 
+        public void Update()
+        {
+            if (playerBoardObj == null)
+            {
+                playerBoardObj = GameObject.FindGameObjectWithTag("Player");
+                return;
+            }
+
+            // Check if player is out of bounds
+            if (   playerBoardObj.transform.position.x < playerMinXZ.x
+                || playerBoardObj.transform.position.z < playerMinXZ.y
+                || playerBoardObj.transform.position.x > playerMaxXZ.x
+                || playerBoardObj.transform.position.z > playerMaxXZ.y)
+            {
+                PlayerPrefs.SetString("endgamestate", "lose");
+                UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+            }
+        }
+
+        // Returns the generated heightmap
         public float[,] GetHeightmap()
         {
             return heightmap;
         }
 
+        // Uses perlin noise to generate a heightmap
         private void GenerateHeightmap()
         {
             float height;
@@ -94,12 +127,14 @@ namespace COMP30019.Project2
                 }
         }
 
+        // Sets a value for the heightmap, making sure it is not less than 0.0f and not greater than 1.0f
         private void SetHeightmapValue(int x, int y, float value)
         {
             heightmap[x, y] = Mathf.Clamp(value, 0.0f, 1.0f);
         }
 
-        void AddTrees()
+        // Adds trees to the terrain
+        private void AddTrees()
         {
             System.Random random = new System.Random();
             int numTreeTypes = treePrefabs.Length;
@@ -126,7 +161,8 @@ namespace COMP30019.Project2
             }
         }
 
-        void AddPlayer()
+        // Adds the player in an appropriate position above the terrain
+        private void AddPlayer()
         {
             Vector3 startPos = new Vector3(size.x / 2.0f, 0.0f, 50.0f);
 
