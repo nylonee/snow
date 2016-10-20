@@ -1,33 +1,77 @@
 nmirpuri 562439
 jgrooby 587823
 
+
 ===========================================================
 ========== What does the application do 
 ===========================================================
-Snow is a third-person action game developed in Unity, where you are a snowboarder making your way down the slope, passing through all the slalom gates and avoiding the obstacles. Slopes are procedurally generated and randomly populated with trees and rocks. The game makes heavy use of Unity’s physics engine to control the way that the snowboarder interacts with the environment. The game is timed, and your fasted time is saved so that you can attempt to beat your best time. 
+Snow is a third-person action game developed in Unity, where you are a snowboarder making 
+your way down the slope, passing through all the slalom gates and avoiding the obstacles. 
+Slopes are procedurally generated and randomly populated with trees and rocks. The game makes 
+heavy use of Unity’s physics engine to control the way that the snowboarder interacts with the 
+environment. The game is timed, and your fasted time is saved so that you can attempt to beat 
+your best time. 
+
 
 ===========================================================
 ========= How does one use it
 ===========================================================
-The snowboarder is controlled by using the gyroscope sensor. If the device does not have an available gyroscope sensor, the snowboarder can be controlled using the A and D keys. The camera can be panned to the left or right by touching on the screen (or using the mouse).
+The snowboarder is controlled by using the gyroscope sensor. If the device does not have an 
+available gyroscope sensor, the snowboarder can be controlled using the A and D keys. The 
+camera can be panned to the left or right by touching on the screen (or using the mouse).
 
-Once you open the app, you are given two buttons: You can either start the game, or quit the game. Starting the game places you, a snowboarder, at the top of a mountain, and you will have to make it to the bottom of the mountain, dodging the rocks and trees, and going through the slalom gates (the twin poles stationed along the mountain). To control your snowboarder, use the gyroscope sensor on your surface tablet (for example, tilt the surface to the right to make the snowboarder tilt to the right), and to control the camera, touch the screen in the direction you want to pan your camera in, the closer to the edge of the table you touch, the further the camera pans out.
+Once you open the app, you are given two buttons: You can either start the game, or quit the 
+game. Starting the game places you, a snowboarder, at the top of a mountain, and you will have 
+to make it to the bottom of the mountain, dodging the rocks and trees, and going through the 
+slalom gates (the twin poles stationed along the mountain). To control your snowboarder, use 
+the gyroscope sensor on your surface tablet (for example, tilt the surface to the right to 
+make the snowboarder tilt to the right), and to control the camera, touch the screen in the 
+direction you want to pan your camera in, the closer to the edge of the table you touch, 
+the further the camera pans out.
 
-Whether you win by making it to the last gate, or you lose by missing one, you immediately see a game over screen, which shows the high score, and gives you the same prompts as before: Retry the game, or quit the game.
+Whether you win by making it to the last gate, or you lose by missing one, you immediately 
+see a game over screen, which shows the high score, and gives you the same prompts as 
+before: Retry the game, or quit the game.
 
 
 ===========================================================
 ========= How we modelled objects and entities
 ===========================================================
-The terrain is generated using Unity’s built-in terrain engine, with a heightmap generated using perlin noise. The terrain is then populated with randomly placed trees and rocks. The snowboarder is made out of a number of scaled cube meshes, which are rigidbody physics objects attached to each other using Unity’s joint components. The checkpoint and goal slalom gates are also made out of scaled cube meshes. Collider components are used on the terrain, gates, trees, and rocks in order to handle collisions with the player. A particle system is also used to generate a snowing effect.
+The terrain is generated using Unity’s built-in terrain engine, with a heightmap generated 
+using perlin noise. The terrain is then populated with randomly placed trees and rocks. 
+The snowboarder is made out of a number of scaled cube meshes, which are rigidbody physics 
+objects attached to each other using Unity’s joint components. The checkpoint and goal 
+slalom gates are also made out of scaled cube meshes. Collider components are used on the 
+terrain, gates, trees, and rocks in order to handle collisions with the player. A particle 
+system is also used to generate a snowing effect.
 
 
 ===========================================================
 ========= How we handled graphics and camera motion
 ===========================================================
-Two custom HLSL/Cg shaders are used, a fog shader and a posterization shader. Both of these shaders are used for postprocessing image effects (https://docs.unity3d.com/Manual/comp-ImageEffects.html) using the camera’s depth/normal textures. The fog shader uses depth values to interpolate a fragment’s color with some amount of grey (or whichever fog color is chosen) depending on the depth value of that fragment. The posterization shader snaps a fragment’s red, green and blue color values to one of few different “levels”, giving a pleasing, abstract visual aesthetic. Additionally, the posterization shader can optionally apply outlines by comparing the depth and normal values of the current fragment with the depth and normal values of nearby fragments to determine sudden changes. Meshes in the game use simple standard Unity shaders.
+Two custom HLSL/Cg shaders are used, a fog shader and a posterization shader. Both of 
+these shaders are used for postprocessing image effects 
+(https://docs.unity3d.com/Manual/comp-ImageEffects.html) using the camera’s depth/normal 
+textures. The fog shader uses depth values to interpolate a fragment’s color with some 
+amount of grey (or whichever fog color is chosen) depending on the depth value of that 
+fragment. The posterization shader snaps a fragment’s red, green and blue color values 
+to one of few different “levels”, giving a pleasing, abstract visual aesthetic. 
+Additionally, the posterization shader can optionally apply outlines by comparing 
+the depth and normal values of the current fragment with the depth and normal values 
+of nearby fragments to determine sudden changes. Meshes in the game use simple standard 
+Unity shaders.
 
-The camera follows behind the snowboarder, using the sum of three vectors to determine its position: The normal of the terrain beneath the snowboarder at any point in time, the position of the player, and the vector perpendicular to the normal, in the direction that the camera is desired (for example, if the camera is desired to be directly behind the player, the perpendicular would be the cross product of the Normal beneath the player, and a Vector3.Right). This works better than a static camera that is a set distance, because it allows for the camera to adjust to the slope of the mountain (steeper parts will make the camera rise higher, whereas flat terrains will make the camera dip down so that you see more of the horizon). At all times the camera will look at the snowboarder.
+The camera follows behind the snowboarder, using the sum of three vectors to determine its 
+position: The normal of the terrain beneath the snowboarder at any point in time, the 
+position of the player, and the vector perpendicular to the normal, in the direction 
+that the camera is desired (for example, if the camera is desired to be directly behind 
+the player, the perpendicular would be the cross product of the Normal beneath the 
+player, and a Vector3.Right). This works better than a static camera that is a set 
+distance, because it allows for the camera to adjust to the slope of the mountain 
+(steeper parts will make the camera rise higher, whereas flat terrains will make the 
+camera dip down so that you see more of the horizon). At all times the camera will 
+look at the snowboarder.
+
 
 ===========================================================
 ========= External code/sources
