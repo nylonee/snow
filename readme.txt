@@ -64,7 +64,8 @@ two which provide postprocessing image effects
 (https://docs.unity3d.com/Manual/comp-ImageEffects.html). The first
 image effect, the “posterization” shader, snaps a fragment’s red,
 green and blue color values to one of few different “levels”, giving
-a pleasing, abstract visual aesthetic. The second image effect, the
+a pleasing, abstract visual aesthetic in which colors blend together
+and shift as the player moves. The second image effect, the
 fog shader, uses depth values from the camera's depth texture values
 to interpolate a fragment’s color with some amount of grey (or
 whichever fog color is chosen) depending on the depth value of that
