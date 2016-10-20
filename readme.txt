@@ -4,6 +4,19 @@ jgrooby 587823
 Gameplay video:
 https://www.youtube.com/watch?v=7ECAYQyZ8vM
 
+Regarding the Windows app certification report
+----------------------------------------------
+Despite our application compiling and functioning correctly as a
+Windows store app (including working gyroscope controls), we were
+unable to pass every test for the certification report. This appears
+to be due to either a bug with our version of Unity, Windows 10, or
+Visual Studio, or due to not having some required SDK installed
+(and neither of us have any remaining hard drive space on our
+Surfaces). However, it seems as though these failed tests were not
+critical and that our app would still be allowed to be submitted
+on the Windows store.
+
+
 ===========================================================
 ========== What does the application do
 ===========================================================
