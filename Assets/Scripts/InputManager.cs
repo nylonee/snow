@@ -29,8 +29,10 @@ namespace COMP30019.Project2
             rb = GetComponent<Rigidbody>();
             gyro = Input.gyro;
 
-            if (SystemInfo.supportsGyroscope)
+            if (PlayerPrefs.GetInt("gyro") == 1)
                 gyro.enabled = true;
+            else
+                gyro.enabled = false;
         }
 
         float getTilt()
@@ -58,9 +60,15 @@ namespace COMP30019.Project2
             if (Input.GetKeyDown("g"))
             {
                 if (gyro.enabled)
+                {
                     gyro.enabled = false;
+                    PlayerPrefs.SetInt("gyro", 0);
+                }
                 else if (SystemInfo.supportsGyroscope)
+                {
                     gyro.enabled = true;
+                    PlayerPrefs.SetInt("gyro", 1);
+                }
             }
 
             // Normal movement if touching ground
