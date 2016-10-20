@@ -1,4 +1,4 @@
-﻿Shader "Custom/TerrainShader"
+﻿Shader "Custom/Terrain"
 {
 	Properties
 	{
