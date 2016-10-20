@@ -22,6 +22,7 @@ namespace COMP30019.Project2
             {
                 // Missed goal
                 UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+                PlayerPrefs.SetString("endgamestate", "lose");
             }
         }
 
@@ -31,6 +32,7 @@ namespace COMP30019.Project2
             {
                 // GOL!!!!!!!!!!!!!
                 PlayerPrefs.SetFloat("yourscore", score.getTime());
+                PlayerPrefs.SetString("endgamestate", "win");
                 if (PlayerPrefs.GetFloat("highscore") > score.getTime() || PlayerPrefs.GetFloat("highscore") == 0f) PlayerPrefs.SetFloat("highscore", score.getTime());
                 
                 UnityEngine.SceneManagement.SceneManager.LoadScene(2);

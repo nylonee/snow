@@ -15,7 +15,12 @@ namespace COMP30019.Project2
 
         void Update()
         {
-            timeText.text = "Best Time: " + PlayerPrefs.GetFloat("highscore").ToString("00.00");
+            float highscore = PlayerPrefs.GetFloat("highscore");
+            timeText.text = "Best Time: " + highscore.ToString("00.00");
+
+            // If no highscore
+            if (highscore == 0.0f)
+                timeText.text = "";
         }
     }
 }

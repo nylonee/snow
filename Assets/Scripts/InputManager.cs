@@ -64,7 +64,7 @@ namespace COMP30019.Project2
                 rb.AddForce(rb.rotation * Vector3.left * force * Time.deltaTime);
 
                 // Try to keep upright
-                rb.MoveRotation(Quaternion.Euler(Mathf.MoveTowardsAngle(fixAngle(rb.rotation.eulerAngles.x), 0.0f, uprightAssist * Time.deltaTime), rb.rotation.eulerAngles.y, rb.rotation.eulerAngles.z));
+                rb.MoveRotation(Quaternion.Euler(Mathf.MoveTowardsAngle(FixAngle(rb.rotation.eulerAngles.x), 0.0f, uprightAssist * Time.deltaTime), rb.rotation.eulerAngles.y, rb.rotation.eulerAngles.z));
             }
 
             // If not touching ground, only rotate
@@ -86,7 +86,7 @@ namespace COMP30019.Project2
                 isTouchingGround = false;
         }
 
-        private float fixAngle(float angle)
+        private float FixAngle(float angle)
         {
             if (angle < 0.0f)
                 angle += 360.0f;
